@@ -82,11 +82,16 @@ export function RateCalculator() {
                 </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-between text-sm text-slate-500 dark:text-slate-400">
-                <span>Current Rate</span>
-                <span>
-                    {loading ? "Loading..." : rate ? `1 EUR = ${rate.toFixed(4)} CHF` : "unavailable"}
-                </span>
+            <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-2 text-sm text-slate-500 dark:text-slate-400">
+                <div className="flex justify-between">
+                    <span>Current Rate</span>
+                    <span>
+                        {loading ? "Loading..." : rate ? `1 EUR = ${rate.toFixed(4)} CHF` : "unavailable"}
+                    </span>
+                </div>
+                <div className="text-center text-xs mt-2">
+                    Source: <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-chf.en.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-700 dark:hover:text-slate-300 transition-colors">European Central Bank (ECB)</a> via Frankfurter API
+                </div>
             </div>
         </div>
     );
