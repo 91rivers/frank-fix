@@ -8,7 +8,7 @@ export function RateCalculator() {
     const [error, setError] = useState<string | null>(null);
 
     const [amount, setAmount] = useState<string>("1000");
-    const [fromCurrency, setFromCurrency] = useState<"EUR" | "CHF">("EUR");
+    const [fromCurrency, setFromCurrency] = useState<"EUR" | "CHF">("CHF");
 
     useEffect(() => {
         async function fetchRate() {
@@ -64,9 +64,9 @@ export function RateCalculator() {
                 <div className="flex justify-center -my-6 relative z-10">
                     <button
                         onClick={handleSwap}
-                        className="bg-white dark:bg-slate-800 p-2 rounded-full shadow border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition"
+                        className="bg-frank-blue text-white p-3 rounded-full shadow-lg border-2 border-white dark:border-slate-900 hover:opacity-90 transition transform hover:scale-105"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-600 dark:text-slate-400"><path d="m16 3-4 4 4 4" /><path d="M20 7H4" /><path d="m8 21 4-4-4-4" /><path d="M4 17h16" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m16 3-4 4 4 4" /><path d="M20 7H4" /><path d="m8 21 4-4-4-4" /><path d="M4 17h16" /></svg>
                     </button>
                 </div>
 

@@ -5,17 +5,19 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-frank-blue: #123b7a;
+  --color-frank-red: #d23b3b;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+  --background: #F6F7F9;
+  --foreground: #111827;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0f172a;
-    --foreground: #f8fafc;
+    --foreground: #F6F7F9;
   }
 }
 

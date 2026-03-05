@@ -64,7 +64,7 @@ export function WaitlistForm() {
                     <button
                         type="submit"
                         disabled={status === "loading" || !email}
-                        className="rounded-full bg-slate-900 px-8 py-3 font-semibold text-white shadow-sm hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 transition"
+                        className="rounded-full bg-frank-blue px-8 py-3 font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition"
                     >
                         {status === "loading" ? "Joining..." : "Join Waitlist"}
                     </button>
