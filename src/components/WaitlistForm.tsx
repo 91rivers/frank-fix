@@ -26,7 +26,7 @@ export function WaitlistForm() {
             }
 
             setStatus("success");
-            setMessage("You're on the list! We'll notify you when Frank is live.");
+            setMessage("You're in. We'll keep you posted.");
             setEmail("");
         } catch (error: any) {
             console.error(error);
@@ -37,7 +37,7 @@ export function WaitlistForm() {
             } else if (error.code === '23505') {
                 // Unique violation
                 setStatus("success");
-                setMessage("You are already on the waitlist!");
+                setMessage("You're already subscribed.");
                 setEmail("");
             } else {
                 setMessage("Something went wrong. Please try again.");
@@ -66,7 +66,7 @@ export function WaitlistForm() {
                         disabled={status === "loading" || !email}
                         className="rounded-full bg-frank-blue px-8 py-3 font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition"
                     >
-                        {status === "loading" ? "Joining..." : "Join Waitlist"}
+                        {status === "loading" ? "Joining..." : "Get Updates"}
                     </button>
                 </form>
             )}

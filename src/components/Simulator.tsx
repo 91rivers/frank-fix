@@ -5,21 +5,29 @@ import { SlidersHorizontal } from 'lucide-react';
 
 type EditedSide = 'felix' | 'flora';
 
-export function Simulator() {
+type SimulatorProps = {
+    initialFrankRateChfPerEur?: number;
+};
+
+export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) {
+    const safeInitialFrankRate = initialFrankRateChfPerEur > 0 ? initialFrankRateChfPerEur : 0.95;
+    const defaultBankSpreadPercent = 1.5;
+    const defaultFelixBankRate = safeInitialFrankRate * (1 + defaultBankSpreadPercent / 100);
+    const defaultFloraBankRate = safeInitialFrankRate * (1 - defaultBankSpreadPercent / 100);
     const defaultAssumptions = {
-        frankRateChfPerEur: 0.95,
-        bankSpreadPercent: 1.5,
+        frankRateChfPerEur: safeInitialFrankRate,
+        bankSpreadPercent: defaultBankSpreadPercent,
         felixAmountChf: 1000,
-        felixBankRateChfPerEur: 0.9645,
+        felixBankRateChfPerEur: defaultFelixBankRate,
         felixFixedFeeChf: 5,
         felixVariableFeePercent: 0,
-        floraAmountEur: 1000 / 0.95,
-        floraBankRateChfPerEur: 0.9358,
+        floraAmountEur: 1000 / safeInitialFrankRate,
+        floraBankRateChfPerEur: defaultFloraBankRate,
         floraFixedFeeEur: 5,
         floraVariableFeePercent: 0
     };
 
-    const frankRateChfPerEur = defaultAssumptions.frankRateChfPerEur;
+    const [frankRateChfPerEur, setFrankRateChfPerEur] = useState(defaultAssumptions.frankRateChfPerEur);
     const [felixAmountChf, setFelixAmountChf] = useState(defaultAssumptions.felixAmountChf);
     const [felixBankRateChfPerEur, setFelixBankRateChfPerEur] = useState(defaultAssumptions.felixBankRateChfPerEur);
     const [felixFixedFeeChf, setFelixFixedFeeChf] = useState(defaultAssumptions.felixFixedFeeChf);
@@ -101,6 +109,7 @@ export function Simulator() {
     };
 
     const resetDefaults = () => {
+        setFrankRateChfPerEur(defaultAssumptions.frankRateChfPerEur);
         setFelixAmountChf(defaultAssumptions.felixAmountChf);
         setFelixBankRateChfPerEur(defaultAssumptions.felixBankRateChfPerEur);
         setFelixFixedFeeChf(defaultAssumptions.felixFixedFeeChf);
@@ -294,7 +303,7 @@ export function Simulator() {
 
             <div className="text-xs text-slate-500 -mt-3 text-left px-1">
                 <span>
-                    * Default assumptions for this comparison: interbank reference rate {defaultAssumptions.frankRateChfPerEur.toFixed(4)} CHF/EUR; default bank spread {defaultAssumptions.bankSpreadPercent.toFixed(1)}%; bank fees = fixed {defaultAssumptions.felixFixedFeeChf.toFixed(2)} CHF / {defaultAssumptions.floraFixedFeeEur.toFixed(2)} EUR + variable {defaultAssumptions.felixVariableFeePercent.toFixed(2)}% / {defaultAssumptions.floraVariableFeePercent.toFixed(2)}%.{' '}
+                    * Default assumptions for this comparison: interbank reference rate {frankRateChfPerEur.toFixed(4)} CHF/EUR; default bank spread {defaultAssumptions.bankSpreadPercent.toFixed(1)}%; bank fees = fixed {defaultAssumptions.felixFixedFeeChf.toFixed(2)} CHF / {defaultAssumptions.floraFixedFeeEur.toFixed(2)} EUR + variable {defaultAssumptions.felixVariableFeePercent.toFixed(2)}% / {defaultAssumptions.floraVariableFeePercent.toFixed(2)}%.{' '}
                     <button
                         type="button"
                         onClick={openAssumptionsModal}

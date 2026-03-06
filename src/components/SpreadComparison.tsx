@@ -1,21 +1,9 @@
-import { Suspense } from "react";
+import { fetchFrankfurterRate } from "@/lib/rates";
 
 // Fetch the real market rate (ECB reference)
 async function getExchangeRate() {
-    try {
-        const res = await fetch(
-            "https://api.frankfurter.dev/v1/latest?base=EUR&symbols=CHF",
-            {
-                next: { revalidate: 3600 },
-            }
-        );
-        if (!res.ok) return null;
-        const data = await res.json();
-        return data.rates.CHF as number;
-    } catch (error) {
-        console.error("Failed to fetch exchange rate for comparison:", error);
-        return null;
-    }
+    const result = await fetchFrankfurterRate("EUR", "CHF");
+    return result?.rate ?? null;
 }
 
 export async function SpreadComparison() {
