@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Zap } from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
 
 type EditedSide = 'felix' | 'flora';
 
@@ -153,7 +153,7 @@ export function Simulator() {
                 </p>
                 <p className="text-sm text-slate-500 mt-1">
                     <span className="font-semibold text-slate-700 dark:text-slate-300">{annualLossCHF.toFixed(2)} CHF</span>{' '}
-                    <span className="font-semibold text-red-600 dark:text-red-400">wasted</span> on <span className="font-semibold text-slate-700 dark:text-slate-300">spread</span> and{' '}
+                    <span className="font-semibold text-frank-red dark:text-red-400">wasted</span> on <span className="font-semibold text-slate-700 dark:text-slate-300">spread</span> and{' '}
                     <span className="font-semibold text-slate-700 dark:text-slate-300">fixed bank fees</span>.
                 </p>
                 <p className="text-sm text-slate-500 mt-1">
@@ -171,7 +171,7 @@ export function Simulator() {
                         {/* 1. Sends */}
                         <div className="flex items-center justify-between pb-6 border-b border-slate-200 dark:border-slate-800">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-bold flex items-center justify-center shadow-inner">F</div>
+                                <div className="w-10 h-10 rounded-full bg-frank-blue/10 dark:bg-frank-blue/30 text-frank-blue dark:text-white font-bold flex items-center justify-center shadow-inner">F</div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 dark:text-white">Felix</h3>
                                     <p className="text-xs text-slate-500">CHF to EUR</p>
@@ -187,15 +187,15 @@ export function Simulator() {
                         <div className="space-y-3 pb-6 border-b border-slate-200 dark:border-slate-800">
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Bank rate*</span>
-                                <span className={`font-mono font-medium ${isFelixBankRateBetter ? 'text-emerald-500' : 'text-red-500'}`}>{felixBankRateChfPerEur.toFixed(4)}</span>
+                                <span className={`font-mono font-medium ${isFelixBankRateBetter ? 'text-emerald-500' : 'text-frank-red'}`}>{felixBankRateChfPerEur.toFixed(4)}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Bank fees*</span>
-                                <span className={`font-mono font-medium ${felixTotalBankFeeChf > 0 ? 'text-red-500' : 'text-slate-700 dark:text-slate-300'}`}>-{felixTotalBankFeeChf.toFixed(2)} CHF</span>
+                                <span className={`font-mono font-medium ${felixTotalBankFeeChf > 0 ? 'text-frank-red' : 'text-slate-700 dark:text-slate-300'}`}>-{felixTotalBankFeeChf.toFixed(2)} CHF</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="font-semibold text-slate-700 dark:text-slate-200">Bank returns</span>
-                                <span className={`text-lg font-bold ${isFelixBankReturnBetter ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>{bankEURForA.toFixed(2)} €</span>
+                                <span className={`text-lg font-bold ${isFelixBankReturnBetter ? 'text-emerald-600 dark:text-emerald-400' : 'text-frank-red dark:text-red-400'}`}>{bankEURForA.toFixed(2)} €</span>
                             </div>
                         </div>
 
@@ -203,7 +203,7 @@ export function Simulator() {
                         <div className="space-y-3">
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Interbank rate</span>
-                                <span className={`font-mono font-medium ${isFelixBankRateBetter ? 'text-red-500' : 'text-emerald-500'}`}>{frankRateChfPerEur.toFixed(4)}</span>
+                                <span className={`font-mono font-medium ${isFelixBankRateBetter ? 'text-frank-red' : 'text-emerald-500'}`}>{frankRateChfPerEur.toFixed(4)}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Flora fees</span>
@@ -211,7 +211,7 @@ export function Simulator() {
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="font-semibold text-slate-700 dark:text-slate-200">Flora returns</span>
-                                <span className={`text-lg font-bold ${isFelixBankReturnBetter ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>{frankEURForA.toFixed(2)} €</span>
+                                <span className={`text-lg font-bold ${isFelixBankReturnBetter ? 'text-frank-red dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>{frankEURForA.toFixed(2)} €</span>
                             </div>
                         </div>
                     </div>
@@ -222,7 +222,7 @@ export function Simulator() {
                         {/* 1. Sends */}
                         <div className="flex items-center justify-between pb-6 border-b border-slate-200 dark:border-slate-800">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 font-bold flex items-center justify-center shadow-inner">F</div>
+                                <div className="w-10 h-10 rounded-full bg-frank-blue/10 dark:bg-frank-blue/30 text-frank-blue dark:text-white font-bold flex items-center justify-center shadow-inner">F</div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 dark:text-white">Flora</h3>
                                     <p className="text-xs text-slate-500">EUR to CHF</p>
@@ -238,15 +238,15 @@ export function Simulator() {
                         <div className="space-y-3 pb-6 border-b border-slate-200 dark:border-slate-800">
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Bank rate*</span>
-                                <span className={`font-mono font-medium ${isFloraBankRateBetter ? 'text-emerald-500' : 'text-red-500'}`}>{floraBankRateChfPerEur.toFixed(4)}</span>
+                                <span className={`font-mono font-medium ${isFloraBankRateBetter ? 'text-emerald-500' : 'text-frank-red'}`}>{floraBankRateChfPerEur.toFixed(4)}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Bank fees*</span>
-                                <span className={`font-mono font-medium ${floraTotalBankFeeEur > 0 ? 'text-red-500' : 'text-slate-700 dark:text-slate-300'}`}>-{floraTotalBankFeeEur.toFixed(2)} EUR</span>
+                                <span className={`font-mono font-medium ${floraTotalBankFeeEur > 0 ? 'text-frank-red' : 'text-slate-700 dark:text-slate-300'}`}>-{floraTotalBankFeeEur.toFixed(2)} EUR</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="font-semibold text-slate-700 dark:text-slate-200">Bank returns</span>
-                                <span className={`text-lg font-bold ${isFloraBankReturnBetter ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>{bankCHFForB.toFixed(2)} CHF</span>
+                                <span className={`text-lg font-bold ${isFloraBankReturnBetter ? 'text-emerald-600 dark:text-emerald-400' : 'text-frank-red dark:text-red-400'}`}>{bankCHFForB.toFixed(2)} CHF</span>
                             </div>
                         </div>
 
@@ -254,7 +254,7 @@ export function Simulator() {
                         <div className="space-y-3">
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Interbank rate</span>
-                                <span className={`font-mono font-medium ${isFloraBankRateBetter ? 'text-red-500' : 'text-emerald-500'}`}>{frankRateChfPerEur.toFixed(4)}</span>
+                                <span className={`font-mono font-medium ${isFloraBankRateBetter ? 'text-frank-red' : 'text-emerald-500'}`}>{frankRateChfPerEur.toFixed(4)}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Felix fees</span>
@@ -262,34 +262,33 @@ export function Simulator() {
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="font-semibold text-slate-700 dark:text-slate-200">Felix returns</span>
-                                <span className={`text-lg font-bold ${isFloraBankReturnBetter ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>{frankCHFForB.toFixed(2)} CHF</span>
+                                <span className={`text-lg font-bold ${isFloraBankReturnBetter ? 'text-frank-red dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>{frankCHFForB.toFixed(2)} CHF</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* 4. Shared Loss Bottom Bar */}
-                <div className="bg-red-50 dark:bg-red-950/30 p-6 md:px-8 border-t border-red-100 dark:border-red-900/30 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div>
-                        <p className="text-red-800 dark:text-red-400 font-bold flex items-center gap-2 text-lg">
+                <div className="relative bg-frank-red/5 dark:bg-frank-red/10 p-6 md:px-8 border-t border-frank-red/20 dark:border-frank-red/30">
+                    <div className="w-full text-center">
+                        <p className="text-frank-red dark:text-red-400 font-bold flex items-center justify-center gap-2 text-lg">
                             Banks&apos; bite: <span className="text-2xl">{totalLossCHF.toFixed(2)} CHF</span>
-                            <span className="text-[11px] font-medium text-red-600/80 dark:text-red-400/80">({totalLossEUR.toFixed(2)} EUR)</span>
+                            <span className="text-[11px] font-medium text-frank-red/80 dark:text-red-400/80">({totalLossEUR.toFixed(2)} EUR)</span>
                         </p>
-                        <p className="text-sm text-red-600/80 dark:text-red-400/80 mt-1">
+                        <p className="text-sm text-frank-red/80 dark:text-red-400/80 mt-1 text-center">
                             Felix and Flora's annuel loss: {annualLossCHF.toFixed(2)} CHF
                         </p>
                     </div>
 
-                    <div className="w-full md:w-auto flex flex-col sm:flex-row gap-2">
-                        <button
-                            onClick={() => {
-                                document.getElementById('waitlist-section')?.scrollIntoView({ behavior: 'smooth' });
-                            }}
-                            className="w-full md:w-auto px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full font-bold text-sm transition-all shadow-md transform hover:-translate-y-0.5 flex items-center justify-center gap-2 whitespace-nowrap"
-                        >
-                            <Zap size={16} className="fill-current" /> Stop paying banks
-                        </button>
-                    </div>
+                    <button
+                        type="button"
+                        onClick={openAssumptionsModal}
+                        aria-label="Customize assumptions"
+                        title="Customize assumptions"
+                        className="mt-3 md:mt-0 md:absolute md:right-6 md:top-1/2 md:-translate-y-1/2 mx-auto md:mx-0 h-9 w-9 rounded-full border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/70 text-slate-500 dark:text-slate-400 transition-colors hover:bg-white dark:hover:bg-slate-900 hover:text-slate-700 dark:hover:text-slate-200 flex items-center justify-center"
+                    >
+                        <SlidersHorizontal size={14} aria-hidden="true" />
+                    </button>
                 </div>
             </div>
 
@@ -354,7 +353,7 @@ export function Simulator() {
                                             inputMode="decimal"
                                             value={felixAmountChf}
                                             onChange={e => handleFelixAmountChange(e.target.value)}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
                                     <div className="space-y-1">
@@ -370,7 +369,7 @@ export function Simulator() {
                                             max="5"
                                             value={felixBankRateChfPerEur}
                                             onChange={e => setFelixBankRateChfPerEur(Number(e.target.value) || 0)}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
                                     <div className="space-y-1">
@@ -385,7 +384,7 @@ export function Simulator() {
                                             min="0"
                                             value={felixFixedFeeChf}
                                             onChange={e => setFelixFixedFeeChf(Number(e.target.value) || 0)}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
                                     <div className="space-y-1">
@@ -401,7 +400,7 @@ export function Simulator() {
                                             max="100"
                                             value={felixVariableFeePercent}
                                             onChange={e => setFelixVariableFeePercent(Number(e.target.value) || 0)}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
                                 </div>
@@ -418,7 +417,7 @@ export function Simulator() {
                                             inputMode="decimal"
                                             value={floraAmountEur}
                                             onChange={e => handleFloraAmountChange(e.target.value)}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
                                     <div className="space-y-1">
@@ -434,7 +433,7 @@ export function Simulator() {
                                             max="5"
                                             value={floraBankRateChfPerEur}
                                             onChange={e => setFloraBankRateChfPerEur(Number(e.target.value) || 0)}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
                                     <div className="space-y-1">
@@ -449,7 +448,7 @@ export function Simulator() {
                                             min="0"
                                             value={floraFixedFeeEur}
                                             onChange={e => setFloraFixedFeeEur(Number(e.target.value) || 0)}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
                                     <div className="space-y-1">
@@ -465,7 +464,7 @@ export function Simulator() {
                                             max="100"
                                             value={floraVariableFeePercent}
                                             onChange={e => setFloraVariableFeePercent(Number(e.target.value) || 0)}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
                                 </div>
@@ -483,7 +482,7 @@ export function Simulator() {
                             <button
                                 type="button"
                                 onClick={closeAssumptionsModal}
-                                className="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition"
+                                className="px-4 py-2 rounded-lg text-sm font-semibold bg-frank-blue text-white hover:opacity-90 transition"
                             >
                                 Done
                             </button>

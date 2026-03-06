@@ -59,7 +59,7 @@ export function WaitlistForm() {
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email address"
                         required
-                        className="flex-1 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-5 py-3 text-slate-900 dark:text-white placeholder-slate-400 focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 transition shadow-sm"
+                        className="flex-1 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-5 py-3 text-slate-900 dark:text-white placeholder-slate-400 focus:border-frank-blue focus:outline-none focus:ring-1 focus:ring-frank-blue transition shadow-sm"
                     />
                     <button
                         type="submit"
@@ -71,7 +71,7 @@ export function WaitlistForm() {
                 </form>
             )}
             {status === "error" && (
-                <p className="mt-3 text-sm text-red-500 text-center">{message}</p>
+                <p className="mt-3 text-sm text-frank-red text-center">{message}</p>
             )}
         </div>
     );
