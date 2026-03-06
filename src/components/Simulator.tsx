@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { SlidersHorizontal } from 'lucide-react';
+import { getSafeInitialFrankRate } from '@/lib/simulator';
 
 type EditedSide = 'felix' | 'flora';
 
@@ -10,7 +11,7 @@ type SimulatorProps = {
 };
 
 export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) {
-    const safeInitialFrankRate = initialFrankRateChfPerEur > 0 ? initialFrankRateChfPerEur : 0.95;
+    const safeInitialFrankRate = getSafeInitialFrankRate(initialFrankRateChfPerEur);
     const defaultBankSpreadPercent = 1.5;
     const defaultFelixBankRate = safeInitialFrankRate * (1 + defaultBankSpreadPercent / 100);
     const defaultFloraBankRate = safeInitialFrankRate * (1 - defaultBankSpreadPercent / 100);
@@ -152,25 +153,7 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
     return (
         <div className="w-full max-w-5xl mx-auto space-y-8 animate-in fade-in duration-700">
 
-            {/* 1. Intro + assumptions summary */}
-            <div className="bg-white dark:bg-slate-900/80 rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-800 text-left">
-                <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
-                    Why you need this
-                </h2>
-                <p className="text-sm text-slate-500 mt-1">
-                    Based on your current transfer settings, your yearly bank overpayment is:
-                </p>
-                <p className="text-sm text-slate-500 mt-1">
-                    <span className="font-semibold text-slate-700 dark:text-slate-300">{annualLossCHF.toFixed(2)} CHF</span>{' '}
-                    <span className="font-semibold text-frank-red dark:text-red-400">wasted</span> on <span className="font-semibold text-slate-700 dark:text-slate-300">spread</span> and{' '}
-                    <span className="font-semibold text-slate-700 dark:text-slate-300">fixed bank fees</span>.
-                </p>
-                <p className="text-sm text-slate-500 mt-1">
-                    Need figures ? Run the simulator below.
-                </p>
-            </div>
-
-            {/* 2. Unified Balance Sheet Flow */}
+            {/* 1. Unified Balance Sheet Flow */}
             <div className="bg-slate-50 dark:bg-slate-900/40 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
 
                 <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-800">

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { RateAlertForm } from "@/components/RateAlertForm";
 import { fetchFrankfurterRate, LIVE_RATE_UNAVAILABLE_MESSAGE } from "@/lib/rates";
+import { calculateDefaultAnnualLossChf } from "@/lib/simulator";
 
 async function getRate() {
   const result = await fetchFrankfurterRate("EUR", "CHF");
@@ -10,6 +11,7 @@ async function getRate() {
 
 export default async function Home() {
   const rate = await getRate();
+  const defaultAnnualSavingChf = calculateDefaultAnnualLossChf(rate ?? undefined);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-8 text-center sm:p-20">
@@ -47,7 +49,7 @@ export default async function Home() {
             href="/concept"
             className="inline-flex flex-1 items-center justify-center px-6 py-3 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-frank-blue dark:text-slate-300 bg-white dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
-            Not convinced yet? <br></br>Run the numbers &rarr;
+            Because you could easily save {defaultAnnualSavingChf.toFixed(2)} CHF <br></br>this year. &rarr;
           </Link>
           <button
             type="button"
