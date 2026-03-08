@@ -2,13 +2,21 @@
 
 import { useState, useEffect } from "react";
 
-export function RateCalculator() {
+type RateCalculatorProps = {
+    amount: string;
+    onAmountChange: (value: string) => void;
+    fromCurrency: "EUR" | "CHF";
+    onFromCurrencyChange: (currency: "EUR" | "CHF") => void;
+};
+
+export function RateCalculator({
+    amount,
+    onAmountChange,
+    fromCurrency,
+    onFromCurrencyChange,
+}: RateCalculatorProps) {
     const [rate, setRate] = useState<number | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-
-    const [amount, setAmount] = useState<string>("1000");
-    const [fromCurrency, setFromCurrency] = useState<"EUR" | "CHF">("CHF");
 
     useEffect(() => {
         async function fetchRate() {
@@ -19,8 +27,8 @@ export function RateCalculator() {
                 if (!response.ok) throw new Error("Failed to fetch rate");
                 const data = await response.json();
                 setRate(data.rate);
-            } catch (err) {
-                setError("Could not load latest rate.");
+            } catch {
+                setRate(null);
             } finally {
                 setLoading(false);
             }
@@ -30,7 +38,7 @@ export function RateCalculator() {
     }, []);
 
     const handleSwap = () => {
-        setFromCurrency(prev => prev === "EUR" ? "CHF" : "EUR");
+        onFromCurrencyChange(fromCurrency === "EUR" ? "CHF" : "EUR");
     };
 
     const toCurrency = fromCurrency === "EUR" ? "CHF" : "EUR";
@@ -39,58 +47,50 @@ export function RateCalculator() {
     const convertedAmount = currentRate ? (parsedAmount * currentRate).toFixed(2) : "0.00";
 
     return (
-        <div className="w-full max-w-md mx-auto p-6 bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800">
-            <h2 className="text-xl font-semibold mb-6 text-center text-slate-900 dark:text-white">Fair Rate Calculator</h2>
-
-            {error && <div className="text-red-500 text-sm mb-4 text-center">{error}</div>}
-
-            <div className="space-y-4">
-                {/* You send */}
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
-                    <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">You send</label>
+        <div className="w-full max-w-md mx-auto">
+            <div className="relative flex items-stretch overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white via-slate-50/70 to-slate-100/60 shadow-[0_8px_30px_rgba(2,6,23,0.08)] backdrop-blur dark:border-slate-700/70 dark:from-slate-900/90 dark:via-slate-900/75 dark:to-slate-800/70">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent dark:via-slate-300/20" />
+                <div className="flex-1 min-w-0 px-4 py-3 text-left">
+                    <label className="block text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1">
+                        You send
+                    </label>
                     <div className="flex justify-between items-center">
                         <input
                             type="number"
                             value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                            className="w-full bg-transparent text-3xl font-bold outline-none text-slate-900 dark:text-white placeholder-slate-300 dark:placeholder-slate-600"
+                            onChange={(e) => onAmountChange(e.target.value)}
+                            className="w-full min-w-0 bg-transparent text-2xl font-semibold outline-none text-slate-900 dark:text-white placeholder-slate-300 dark:placeholder-slate-600"
                             placeholder="0"
                         />
-                        <span className="text-2xl font-bold text-slate-800 dark:text-slate-200 ml-4">{fromCurrency}</span>
+                        <span className="ml-2 rounded-md bg-slate-100 px-2 py-0.5 text-sm font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                            {fromCurrency}
+                        </span>
                     </div>
                 </div>
 
-                {/* Swap button */}
-                <div className="flex justify-center -my-6 relative z-10">
+                <div className="relative flex w-10 items-center justify-center">
+                    <div className="absolute inset-y-2 left-1/2 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-slate-300 to-transparent dark:via-slate-600" />
                     <button
                         onClick={handleSwap}
-                        className="bg-frank-blue text-white p-3 rounded-full shadow-lg border-2 border-white dark:border-slate-900 hover:opacity-90 transition transform hover:scale-105"
+                        className="relative z-10 rounded-full border border-slate-200/90 bg-white/95 p-1.5 text-slate-500 shadow-[0_2px_10px_rgba(15,23,42,0.12)] transition hover:-translate-y-px hover:border-frank-blue hover:text-frank-blue dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-400 dark:hover:text-blue-400"
+                        aria-label="Swap currencies"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m16 3-4 4 4 4" /><path d="M20 7H4" /><path d="m8 21 4-4-4-4" /><path d="M4 17h16" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m16 3-4 4 4 4" /><path d="M20 7H4" /><path d="m8 21 4-4-4-4" /><path d="M4 17h16" /></svg>
                     </button>
                 </div>
 
-                {/* They receive */}
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
-                    <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">They receive (mid-market rate)</label>
+                <div className="flex-1 min-w-0 px-4 py-3 text-left">
+                    <label className="block text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1">
+                        You receive
+                    </label>
                     <div className="flex justify-between items-center">
-                        <div className="text-3xl font-bold text-slate-900 dark:text-white truncate">
+                        <div className="text-2xl font-semibold text-slate-900 dark:text-white truncate">
                             {loading ? "..." : convertedAmount}
                         </div>
-                        <span className="text-2xl font-bold text-slate-800 dark:text-slate-200 ml-4">{toCurrency}</span>
+                        <span className="ml-2 rounded-md bg-slate-100 px-2 py-0.5 text-sm font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                            {toCurrency}
+                        </span>
                     </div>
-                </div>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-2 text-sm text-slate-500 dark:text-slate-400">
-                <div className="flex justify-between">
-                    <span>Current Rate</span>
-                    <span>
-                        {loading ? "Loading..." : rate ? `1 EUR = ${rate.toFixed(4)} CHF` : "unavailable"}
-                    </span>
-                </div>
-                <div className="text-center text-xs mt-2">
-                    Source: <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-chf.en.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-700 dark:hover:text-slate-300 transition-colors">European Central Bank (ECB)</a> via Frankfurter API
                 </div>
             </div>
         </div>

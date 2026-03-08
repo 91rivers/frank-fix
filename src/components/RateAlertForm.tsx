@@ -1,15 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Calendar, Mail, UserPlus, CheckCircle2, Coins } from 'lucide-react';
 import { createAlert } from '@/app/actions/alerts';
 
-export function RateAlertForm() {
+const getTodayDateString = () => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().split('T')[0];
+};
+
+type RateAlertFormProps = {
+    linkedAmount: string;
+    linkedBaseCurrency: 'EUR' | 'CHF';
+};
+
+export function RateAlertForm({ linkedAmount, linkedBaseCurrency }: RateAlertFormProps) {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'submitted'>('idle');
-    const [date, setDate] = useState('');
-    const [amount, setAmount] = useState('');
-    const [baseCurrency, setBaseCurrency] = useState<'EUR' | 'CHF'>('EUR');
+    const [date, setDate] = useState(getTodayDateString());
+    const [amount, setAmount] = useState(linkedAmount);
+    const [baseCurrency, setBaseCurrency] = useState<'EUR' | 'CHF'>(linkedBaseCurrency);
     const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        setAmount(linkedAmount);
+    }, [linkedAmount]);
+
+    useEffect(() => {
+        setBaseCurrency(linkedBaseCurrency);
+    }, [linkedBaseCurrency]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -24,8 +43,8 @@ export function RateAlertForm() {
                 setStatus('submitted');
                 setTimeout(() => {
                     setStatus('idle');
-                    setDate('');
-                    setAmount('');
+                    setDate(getTodayDateString());
+                    setAmount(linkedAmount);
                 }, 5000);
             } else {
                 setStatus('idle');
@@ -122,7 +141,7 @@ export function RateAlertForm() {
                             name="targetDate"
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
-                            min={new Date().toISOString().split('T')[0]}
+                            min={getTodayDateString()}
                             className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-frank-blue focus:border-transparent outline-none transition-all dark:text-white placeholder-slate-400"
                         />
                     </div>

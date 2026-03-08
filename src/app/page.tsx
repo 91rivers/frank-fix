@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { RateAlertForm } from "@/components/RateAlertForm";
+import { RateTools } from "@/components/RateTools";
 import { fetchFrankfurterRate, LIVE_RATE_UNAVAILABLE_MESSAGE } from "@/lib/rates";
 import { calculateDefaultAnnualLossChf } from "@/lib/simulator";
 
@@ -31,7 +31,16 @@ export default async function Home() {
             {rate ? rate.toFixed(4) : "..."}
           </div>
           <p className="text-sm text-slate-500 mt-2 font-medium">
-            Fairer EUR/CHF rate provided by the ECB.
+            Fairer EUR/CHF rate provided by the{" "}
+            <a
+              href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-chf.en.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+            >
+              ECB
+            </a>
+            .
           </p>
           {!rate && (
             <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">
@@ -40,9 +49,7 @@ export default async function Home() {
           )}
         </div>
 
-        <div className="w-full mt-4">
-          <RateAlertForm />
-        </div>
+        <RateTools />
 
         <div className="mt-6 mb-12 w-full max-w-md mx-auto flex items-stretch gap-3">
           <Link
