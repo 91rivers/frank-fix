@@ -138,7 +138,8 @@ export function RateAlertForm({ linkedAmount, linkedBaseCurrency }: RateAlertFor
                         <input
                             type="date"
                             required
-                            name="targetDate"
+name="targetDate"
+style={{ maxWidth: "100%", minWidth: 0, boxSizing: "border-box" }}
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
                             min={getTodayDateString()}

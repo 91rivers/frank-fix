@@ -56,7 +56,7 @@ export default async function Home() {
             href="/concept"
             className="inline-flex flex-1 items-center justify-center px-6 py-3 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-frank-blue dark:text-slate-300 bg-white dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
-            Because you could easily save {defaultAnnualSavingChf.toFixed(2)} CHF <br></br>this year. &rarr;
+            In 1 year, you can easily save {defaultAnnualSavingChf.toFixed(2)} CHF. &rarr;
           </Link>
           <button
             type="button"
@@ -73,6 +73,16 @@ export default async function Home() {
 
       <footer className="w-full max-w-2xl mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 text-center flex-shrink-0">
         <p className="mb-2"><strong>Legal Disclaimer:</strong> Frank is a tool for finding fair exchange rates between peers. We are not a bank, broker, or financial institution. Frank does not hold, transfer, or manage any funds. Any exchange of currency must be conducted independently between consenting users at their own risk.</p>
+        <p className="mb-2">
+          Have ideas or feedback? Reach us at{" "}
+          <a
+            href="mailto:frankswap@duck.com?subject=FrankSwap%20feedback"
+            className="underline hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+          >
+            frankswap@duck.com
+          </a>
+          .
+        </p>
         <p>&copy; {new Date().getFullYear()} Frank&apos;s Friendly Fixing. All rights reserved.</p>
       </footer>
     </div>

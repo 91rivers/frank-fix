@@ -53,6 +53,16 @@ export default async function ConceptPage() {
 
             <footer className="w-full max-w-2xl mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 text-center">
                 <p className="mb-2"><strong>Legal Disclaimer:</strong> Frank is a tool for finding fair exchange rates between peers. We are not a bank, broker, or financial institution. Frank does not hold, transfer, or manage any funds. Any exchange of currency must be conducted independently between consenting users at their own risk.</p>
+                <p className="mb-2">
+                    Have ideas or feedback? Reach us at{" "}
+                    <a
+                        href="mailto:frankswap@duck.com?subject=FrankSwap%20feedback"
+                        className="underline hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+                    >
+                        frankswap@duck.com
+                    </a>
+                    .
+                </p>
                 <p>&copy; {new Date().getFullYear()} Frank&apos;s Friendly Fixing. All rights reserved.</p>
             </footer>
         </div>

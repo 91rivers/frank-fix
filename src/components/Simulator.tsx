@@ -156,12 +156,12 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
             {/* 1. Unified Balance Sheet Flow */}
             <div className="bg-slate-50 dark:bg-slate-900/40 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
 
-                <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-800">
+      <div className="grid grid-cols-2 divide-x divide-slate-200 dark:divide-slate-800">
 
                     {/* --- FELIX COLUMN (CHF -> EUR) --- */}
                     <div className="p-6 sm:p-8 flex flex-col space-y-6">
                         {/* 1. Sends */}
-                        <div className="flex items-center justify-between pb-6 border-b border-slate-200 dark:border-slate-800">
+          <div className="flex flex-col items-start gap-2 pb-6 border-b border-slate-200 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-full bg-frank-blue/10 dark:bg-frank-blue/30 text-frank-blue dark:text-white font-bold flex items-center justify-center shadow-inner">F</div>
                                 <div>
@@ -169,7 +169,7 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                                     <p className="text-xs text-slate-500">CHF to EUR</p>
                                 </div>
                             </div>
-                            <div className="text-right">
+            <div className="w-full text-left sm:w-auto sm:text-right">
                                 <p className="text-xs font-semibold text-slate-500 uppercase">Sends</p>
                                 <p className="text-lg font-bold text-slate-900 dark:text-white">{felixAmountChf.toFixed(2)} CHF</p>
                             </div>
@@ -212,7 +212,7 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                     {/* --- FLORA COLUMN (EUR -> CHF) --- */}
                     <div className="p-6 sm:p-8 flex flex-col space-y-6">
                         {/* 1. Sends */}
-                        <div className="flex items-center justify-between pb-6 border-b border-slate-200 dark:border-slate-800">
+          <div className="flex flex-col items-start gap-2 pb-6 border-b border-slate-200 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-full bg-frank-blue/10 dark:bg-frank-blue/30 text-frank-blue dark:text-white font-bold flex items-center justify-center shadow-inner">F</div>
                                 <div>
@@ -220,7 +220,7 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                                     <p className="text-xs text-slate-500">EUR to CHF</p>
                                 </div>
                             </div>
-                            <div className="text-right">
+            <div className="w-full text-left sm:w-auto sm:text-right">
                                 <p className="text-xs font-semibold text-slate-500 uppercase">Sends</p>
                                 <p className="text-lg font-bold text-slate-900 dark:text-white">{floraAmountEur.toFixed(2)} EUR</p>
                             </div>
