@@ -36,10 +36,6 @@ export default async function ConceptPage() {
                     </p>
                 )}
 
-                <p className="w-full text-xs text-slate-500 dark:text-slate-400 md:hidden -mt-2">
-                    Switch to landscape mode for a better simulator view.
-                </p>
-
                 <div className="w-full mb-16 md:my-8 scale-100 sm:scale-105 origin-top">
                     <Simulator initialFrankRateChfPerEur={rate ?? 0.95} />
                 </div>
