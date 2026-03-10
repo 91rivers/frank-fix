@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { SlidersHorizontal } from 'lucide-react';
 import { getSafeInitialFrankRate } from '@/lib/simulator';
 
 type EditedSide = 'felix' | 'flora';
+type AssumptionsPreset = 'default' | 'custom';
 
 type SimulatorProps = {
     initialFrankRateChfPerEur?: number;
@@ -37,6 +39,7 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
     const [floraBankRateChfPerEur, setFloraBankRateChfPerEur] = useState(defaultAssumptions.floraBankRateChfPerEur);
     const [floraFixedFeeEur, setFloraFixedFeeEur] = useState(defaultAssumptions.floraFixedFeeEur);
     const [floraVariableFeePercent, setFloraVariableFeePercent] = useState(defaultAssumptions.floraVariableFeePercent);
+    const [selectedAssumptionsPreset, setSelectedAssumptionsPreset] = useState<AssumptionsPreset>('default');
     const [lastEditedSide, setLastEditedSide] = useState<EditedSide>('felix');
     const [isAssumptionsModalOpen, setIsAssumptionsModalOpen] = useState(false);
     const firstInputRef = useRef<HTMLInputElement>(null);
@@ -97,6 +100,7 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
 
     const handleFelixAmountChange = (value: string) => {
         const nextAmount = Number(value) || 0;
+        setSelectedAssumptionsPreset('custom');
         setLastEditedSide('felix');
         setFelixAmountChf(nextAmount);
         setFloraAmountEur(nextAmount / frankRateChfPerEur);
@@ -104,6 +108,7 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
 
     const handleFloraAmountChange = (value: string) => {
         const nextAmount = Number(value) || 0;
+        setSelectedAssumptionsPreset('custom');
         setLastEditedSide('flora');
         setFloraAmountEur(nextAmount);
         setFelixAmountChf(nextAmount * frankRateChfPerEur);
@@ -119,7 +124,16 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
         setFloraBankRateChfPerEur(defaultAssumptions.floraBankRateChfPerEur);
         setFloraFixedFeeEur(defaultAssumptions.floraFixedFeeEur);
         setFloraVariableFeePercent(defaultAssumptions.floraVariableFeePercent);
+        setSelectedAssumptionsPreset('default');
         setLastEditedSide('felix');
+    };
+
+    const handleAssumptionsPresetChange = (value: AssumptionsPreset) => {
+        if (value === 'default') {
+            resetDefaults();
+            return;
+        }
+        setSelectedAssumptionsPreset('custom');
     };
 
     // Math for Felix (CHF -> EUR)
@@ -298,9 +312,9 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                 </span>
             </div>
 
-            {isAssumptionsModalOpen && (
+            {isAssumptionsModalOpen && createPortal(
                 <div
-                    className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-[1px] flex items-end sm:items-center justify-center"
+                    className="fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-end sm:items-center justify-center p-3 sm:p-6"
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="assumptions-modal-title"
@@ -308,17 +322,14 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                 >
                     <div
                         ref={modalPanelRef}
-                        className="w-full sm:w-[640px] bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 space-y-5"
+                        className="w-full sm:w-[640px] max-h-[90dvh] overflow-y-auto overscroll-contain bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 space-y-5"
                         onClick={(event) => event.stopPropagation()}
                     >
                         <div className="flex items-start justify-between gap-4">
                             <div>
                                 <h3 id="assumptions-modal-title" className="text-lg font-bold text-slate-900 dark:text-white">
-                                    Customize assumptions
+                                    Run your own numbers
                                 </h3>
-                                <p className="text-xs text-slate-500 mt-1">
-                                    Felix and Flora amounts are linked using the fixed Frank rate shown on the page.
-                                </p>
                             </div>
                             <button
                                 type="button"
@@ -328,6 +339,26 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                             >
                                 x
                             </button>
+                        </div>
+
+                        <div className="space-y-1 text-left">
+                            <label htmlFor="assumptions-preset" className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block text-left">
+                                Preset configuration
+                            </label>
+                            <select
+                                id="assumptions-preset"
+                                value={selectedAssumptionsPreset}
+                                onChange={e => handleAssumptionsPresetChange(e.target.value as AssumptionsPreset)}
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
+                            >
+                                <option value="default">Default</option>
+                                <option value="custom">Custom simulation</option>
+                            </select>
+                            <p className="text-[11px] text-slate-500 leading-relaxed text-left">
+                                {selectedAssumptionsPreset === 'default'
+                                    ? 'Using Frank standard assumptions for Felix and Flora.'
+                                    : 'One or more values were adjusted from the default assumptions.'}
+                            </p>
                         </div>
 
                         <div className="space-y-4">
@@ -360,7 +391,10 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                                             min="0.0001"
                                             max="5"
                                             value={felixBankRateChfPerEur}
-                                            onChange={e => setFelixBankRateChfPerEur(Number(e.target.value) || 0)}
+                                            onChange={e => {
+                                                setSelectedAssumptionsPreset('custom');
+                                                setFelixBankRateChfPerEur(Number(e.target.value) || 0);
+                                            }}
                                             className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
@@ -375,7 +409,10 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                                             step="0.01"
                                             min="0"
                                             value={felixFixedFeeChf}
-                                            onChange={e => setFelixFixedFeeChf(Number(e.target.value) || 0)}
+                                            onChange={e => {
+                                                setSelectedAssumptionsPreset('custom');
+                                                setFelixFixedFeeChf(Number(e.target.value) || 0);
+                                            }}
                                             className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
@@ -391,7 +428,10 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                                             min="0"
                                             max="100"
                                             value={felixVariableFeePercent}
-                                            onChange={e => setFelixVariableFeePercent(Number(e.target.value) || 0)}
+                                            onChange={e => {
+                                                setSelectedAssumptionsPreset('custom');
+                                                setFelixVariableFeePercent(Number(e.target.value) || 0);
+                                            }}
                                             className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
@@ -424,7 +464,10 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                                             min="0.0001"
                                             max="5"
                                             value={floraBankRateChfPerEur}
-                                            onChange={e => setFloraBankRateChfPerEur(Number(e.target.value) || 0)}
+                                            onChange={e => {
+                                                setSelectedAssumptionsPreset('custom');
+                                                setFloraBankRateChfPerEur(Number(e.target.value) || 0);
+                                            }}
                                             className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
@@ -439,7 +482,10 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                                             step="0.01"
                                             min="0"
                                             value={floraFixedFeeEur}
-                                            onChange={e => setFloraFixedFeeEur(Number(e.target.value) || 0)}
+                                            onChange={e => {
+                                                setSelectedAssumptionsPreset('custom');
+                                                setFloraFixedFeeEur(Number(e.target.value) || 0);
+                                            }}
                                             className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
@@ -455,7 +501,10 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                                             min="0"
                                             max="100"
                                             value={floraVariableFeePercent}
-                                            onChange={e => setFloraVariableFeePercent(Number(e.target.value) || 0)}
+                                            onChange={e => {
+                                                setSelectedAssumptionsPreset('custom');
+                                                setFloraVariableFeePercent(Number(e.target.value) || 0);
+                                            }}
                                             className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-frank-blue text-slate-900 dark:text-white"
                                         />
                                     </div>
@@ -463,14 +512,7 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                             </div>
                         </div>
 
-                        <div className="flex flex-col sm:flex-row gap-2 sm:justify-end">
-                            <button
-                                type="button"
-                                onClick={resetDefaults}
-                                className="px-4 py-2 rounded-lg text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-                            >
-                                Reset defaults
-                            </button>
+                        <div className="flex justify-end">
                             <button
                                 type="button"
                                 onClick={closeAssumptionsModal}
@@ -480,7 +522,8 @@ export function Simulator({ initialFrankRateChfPerEur = 0.95 }: SimulatorProps) 
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
 
         </div>
