@@ -77,7 +77,7 @@ export async function GET(request: Request) {
             try {
                 // Send the email with Resend
                 const { error: sendError } = await resend.emails.send({
-                    from: 'Frank Fix <alerts@frank.91rivers.com>', // Verified domain
+                    from: 'Frank Fix <alerts@franks.91rivers.com>', // Verified domain
                     to: recipients,
                     subject: 'Your daily Frank Rate is here!',
                     html: htmlString,
